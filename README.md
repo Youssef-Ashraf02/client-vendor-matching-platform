@@ -71,6 +71,30 @@ A comprehensive NestJS backend application for managing business expansion proje
 - **Reverse Proxy**: Nginx
 - **Validation**: Class-validator + Joi
 
+## 🗄️ Database Schema
+
+### Entity Relationship Diagram (ERD)
+
+![Database ERD](https://res.cloudinary.com/dg4lqn3se/image/upload/v1757799814/Screenshot_2025-08-24_182746_djsmdk.png)
+
+
+*The ERD above shows the complete MySQL database structure including all entities, relationships, and key constraints used in the VendorMatch platform.*
+
+### MySQL Tables
+
+- `users` - User accounts and authentication
+- `clients` - Company/client information
+- `projects` - Expansion projects
+- `vendors` - Service provider profiles
+- `matches` - Project-vendor matching results
+- `project_services` - Services required by projects
+- `vendor_services` - Services offered by vendors
+- `vendor_countries` - Countries supported by vendors
+
+### MongoDB Collections
+
+- `researchdocuments` - Market research and project documents
+
 ## 📁 Project Structure
 
 ```
@@ -103,23 +127,11 @@ src/
 
 ```bash
 git clone <repository-url>
-cd expanders360-backend
+cd backend
 npm install
 ```
 
 ### 2. Environment Configuration
-
-**Option A: Quick Setup (Recommended)**
-
-```bash
-# Windows PowerShell
-.\setup-env.ps1
-
-# Linux/Mac
-./setup-env.sh
-```
-
-**Option B: Manual Setup**
 
 ```bash
 cp env.example .env
@@ -242,23 +254,6 @@ docker-compose -f docker-compose.prod.yml up -d
 | `SMTP_HOST`   | SMTP server host          | Required      |
 | `ADMIN_EMAIL` | Admin notification email  | Required      |
 
-### Database Schema
-
-#### MySQL Tables
-
-- `users` - User accounts and authentication
-- `clients` - Company/client information
-- `projects` - Expansion projects
-- `vendors` - Service provider profiles
-- `matches` - Project-vendor matching results
-- `project_services` - Services required by projects
-- `vendor_services` - Services offered by vendors
-- `vendor_countries` - Countries supported by vendors
-
-#### MongoDB Collections
-
-- `researchdocuments` - Market research and project documents
-
 ## 📊 Matching Algorithm
 
 The system uses a sophisticated scoring algorithm to match projects with vendors:
@@ -279,19 +274,6 @@ score = services_overlap * 2 + rating + SLA_weight;
 - **SLA Monitoring** (8:00 AM UTC): Flags vendors with expired response times
 - **Weekly Statistics** (Monday 9:00 AM UTC): Generates performance reports
 
-## 🧪 Testing
-
-```bash
-# Unit tests
-npm run test
-
-# E2E tests
-npm run test:e2e
-
-# Test coverage
-npm run test:cov
-```
-
 ## 📝 Database Migrations
 
 ```bash
@@ -304,133 +286,6 @@ npm run migration:run
 # Revert migration
 npm run migration:revert
 ```
-
-## 🚀 Deployment
-
-### Cloud Deployment Options
-
-#### Railway
-
-1. Connect your GitHub repository
-2. Set environment variables
-3. Deploy automatically on push
-
-#### Render
-
-1. Create new Web Service
-2. Connect repository
-3. Configure build and start commands
-4. Set environment variables
-
-#### AWS Free Tier
-
-1. Use AWS RDS for MySQL
-2. MongoDB Atlas for document storage
-3. EC2 instance for application
-4. Configure security groups and load balancer
-
-### Production Checklist
-
-- [ ] Set `NODE_ENV=production`
-- [ ] Configure production database URLs
-- [ ] Set strong JWT secrets
-- [ ] Configure SMTP for email notifications
-- [ ] Set up SSL certificates
-- [ ] Configure CORS origins
-- [ ] Set up monitoring and logging
-- [ ] Configure backup strategies
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🔧 Troubleshooting
-
-### Common Issues
-
-#### 1. Port Already in Use
-
-```bash
-# Error: Bind for 0.0.0.0:3307 failed: port is already allocated
-# Solution: Change MySQL port in .env file
-MYSQL_PORT=3308  # or any other available port
-```
-
-#### 2. App Container Not Starting
-
-```bash
-# Check container logs
-docker-compose logs app
-
-# Check if all required environment variables are set
-docker-compose config
-
-# Restart services
-docker-compose down && docker-compose up -d
-```
-
-#### 3. Database Connection Issues
-
-```bash
-# Check MySQL container status
-docker-compose ps mysql
-
-# Check MySQL logs
-docker-compose logs mysql
-
-# Test database connection
-docker-compose exec app npm run migration:run
-```
-
-#### 4. Missing Environment Variables
-
-```bash
-# Generate secure passwords
-.\deploy.ps1 passwords  # Windows
-./deploy.sh passwords   # Linux/Mac
-
-# Or use the setup script
-.\setup-env.ps1  # Windows
-./setup-env.sh   # Linux/Mac
-```
-
-#### 5. MongoDB Atlas Connection
-
-- Ensure your MongoDB Atlas cluster allows connections from your IP
-- Check the connection string format in `.env`
-- Verify network access settings in MongoDB Atlas dashboard
-
-### Debug Commands
-
-```bash
-# View all container status
-docker-compose ps
-
-# View logs for specific service
-docker-compose logs -f app
-
-# Execute commands in running container
-docker-compose exec app bash
-
-# Check environment variables
-docker-compose exec app env
-```
-
-## 🆘 Support
-
-For support and questions:
-
-- Create an issue in the GitHub repository
-- Check the documentation in the `/docs` folder
-- Review the API documentation at `/api/docs` (when running)
 
 ---
 
